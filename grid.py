@@ -1,9 +1,11 @@
 import numpy as np
+from typing import *
 
 class Grid:
 
-    def __init__(self):
-        pass
+    def __init__(self, shape: Tuple[int] = (50, 50)):
+        
+        self.array = np.zeros(shape)
 
     def loc_exists(self, neighbor_loc):
         """
