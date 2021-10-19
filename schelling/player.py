@@ -14,7 +14,7 @@ class Player:
         self.resources = resources
         self.location = np.array([0, 0])
 
-    def calc_happy(self, neighbors: List[Player]) -> float:
+    def calc_happy(self, neighbors: List[Any]) -> float:
         """
         """
         happy = False
@@ -31,7 +31,7 @@ class Player:
 
         return happy
 
-    def update_similar(grid: np.array()) -> float:
+    def update_similar(grid: np.array) -> float:
         """
         """
         pass

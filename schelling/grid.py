@@ -19,7 +19,7 @@ class Grid:
 
         return exists
 
-    def get_neighbors(self, location: np.array()) -> float:
+    def get_neighbors(self, location: np.array) -> float:
         """
         """
         neighbors = []

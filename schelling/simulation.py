@@ -1,5 +1,6 @@
-from player import Player
-from grid import Grid
+from .player import Player
+from .grid import Grid
+from typing import *
 
 # TO DO: cost para extensao dos resources
 
@@ -19,7 +20,8 @@ class Simulation:
         self.seed = seed
     
     def generate_players(self) -> None:
-
+        """
+        """
         n_squares = self.shape[0] * self.shape[1]
         players = []
         for g, f in self.groups.items():
@@ -40,7 +42,8 @@ class Simulation:
 
         self.grid.array = np.reshape(shuffled_players, self.shape)
 
-    def repopulate(self):
+
+    def repopulate(self) -> None:
         # TO DO: ACCOUNT FOR RESOURCES
         rng = np.random.default_rng()
         shuffled_p = rng.permutation(len(self.unhappy_p))
@@ -61,15 +64,17 @@ class Simulation:
     def run_simulation(self):
         """
         """
-        # CHANGE TO WHILE LOOP
+        # Generate players in grid
         self.generate_players()
-
+        # CHANGE TO WHILE LOOP
         for _ in range(100):
             self.empty_locs = []
             self.unhappy_locs = []
             self.unhappy_p = []
 
+            # Iterate over grid squares
             for loc, p in np.nditer(self.grid.array):
+                # If square not empty, calculate player happiness
                 if p != 0:
                     p.location = loc
 
@@ -79,6 +84,7 @@ class Simulation:
                     self.unhappy_locs.append(loc)
                     self.unhappy_p.append(p)
 
+                # If square empty, store its location for repopulate
                 else:
                     self.empty_locs.append(loc)
 
