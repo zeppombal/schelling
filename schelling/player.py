@@ -26,8 +26,11 @@ class Player:
             else:
                 dif += 1
 
-        if same / (same + dif) < self.similar:
-            happy = True
+        try:
+            if same / (same + dif) < self.similar:
+                happy = True
+        except ZeroDivisionError:
+            pass
 
         return happy
 

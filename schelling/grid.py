@@ -12,8 +12,11 @@ class Grid:
         """
         exists = True
         for i in [0, 1]:
-            # Check whether location in grid exists, or square is empty
-            if neighbor_loc[i] > self.array.shape[i] or neighbor_loc[i] < 0 or self.array[neighbor_loc] == 0:
+            try:
+                if self.array[neighbor_loc[0], neighbor_loc[1]] == 0 or neighbor_loc[i] >= self.array.shape[i] or neighbor_loc[i] < 0:
+                    exists = False
+                    break
+            except IndexError:
                 exists = False
                 break
 
@@ -29,6 +32,6 @@ class Grid:
                     neighbor_loc = location + np.array([x, y])
                     
                     if self.loc_exists(neighbor_loc):
-                        neighbors.append(self.array[neighbor_loc])
+                        neighbors.append(self.array[neighbor_loc[0], neighbor_loc[1]])
 
         return neighbors
