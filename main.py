@@ -5,8 +5,7 @@ groups = {
     "blue": 0.4,
     "red": 0.4
 }
-grid = Grid()
-shape = (50, 50)
+shape = (10, 10)
 empty = 0.2
 
 player_kw = {
@@ -14,7 +13,7 @@ player_kw = {
     "resources": 200
 }
 
-sim = Simulation(groups, grid, shape, empty, player_kw)
+sim = Simulation(groups, shape, empty, player_kw)
 
 sim.generate_players()
 

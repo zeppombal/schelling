@@ -27,7 +27,7 @@ class Player:
                 dif += 1
 
         try:
-            if same / (same + dif) < self.similar:
+            if same / (same + dif) >= self.similar:
                 happy = True
         except ZeroDivisionError:
             pass

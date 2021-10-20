@@ -12,7 +12,6 @@ class Simulation:
 
     def __init__(self,
                  groups: Dict[str, float],
-                 grid: Grid,
                  shape: Tuple[int],
                  empty: float,
                  player_kw: Dict[Any, Any],
@@ -57,6 +56,8 @@ class Simulation:
         shuffled_p = rng.permutation(len(self.unhappy_p) - 1)
 
         for i in shuffled_p:
+            if self.animate:
+                self.display()
             # Shuffle empty locs for no bias
             self.empty_locs = rng.permutation(self.empty_locs).tolist()
             new_i = tuple(self.empty_locs.pop(0))
@@ -113,8 +114,6 @@ class Simulation:
         self.generate_players()
         # CHANGE TO WHILE LOOP
         for _ in range(100):
-            if self.animate:
-                self.display()
 
             self.empty_locs = []
             self.unhappy_locs = []
@@ -129,8 +128,9 @@ class Simulation:
                     neighbors = self.grid.get_neighbors(p.location)
                     is_happy = p.calc_happy(neighbors)
 
-                    self.unhappy_locs.append(loc)
-                    self.unhappy_p.append(p)
+                    if not is_happy:
+                        self.unhappy_locs.append(loc)
+                        self.unhappy_p.append(p)
 
                 # If square empty, store its location for repopulate
                 else:
