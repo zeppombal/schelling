@@ -2,6 +2,7 @@ from .player import Player
 from .grid import Grid
 from typing import *
 import numpy as np
+from copy import deepcopy
 
 # TO DO: cost para extensao dos resources
 
@@ -54,14 +55,14 @@ class Simulation:
         for i in shuffled_p:
             # Shuffle empty locs for no bias
             self.empty_locs = rng.permutation(self.empty_locs).tolist()
-            new_i = self.empty_locs.pop(0)
+            new_i = tuple(self.empty_locs.pop(0))
 
             # Put player in an empty loc
-            self.grid.array[new_i] = self.unhappy_p[i]
+            self.grid.array[new_i] = deepcopy(self.unhappy_p[i])
             # Put loc where player was in empty locs
-            self.empty_locs.append(self.unhappy_locs[i])
+            self.empty_locs.append(deepcopy(self.unhappy_locs[i]))
             # Empty where the player was
-            self.grid.array[self.unhappy_locs[i]] = 0
+            self.grid.array[deepcopy(self.unhappy_locs[i])] = 0
 
 
     def run_simulation(self):
@@ -90,18 +91,20 @@ class Simulation:
                 # If square empty, store its location for repopulate
                 else:
                     self.empty_locs.append(loc)
-
-            ### DEBUG PRINT
-            elements = []
-            for j in self.grid.array:
-                for i in j:
-                    if i != 0:
-                        g = i.group
-                    else:
-                        g = i
-                    elements.append(g)
-            display = np.array(elements).reshape(self.shape)
-            print(display)
+                    
+            #####################
+            #elements = []
+            #for j in self.grid.array:
+            #    for t in j:
+            #        if t != 0:
+            #            g = t.group
+            #        else:
+            #            g = t
+            #        elements.append(g)
+            #display = np.array(elements).reshape(self.shape)
+            #print(display)
+            #####################
+            print(_)
             self.repopulate()
 
             
