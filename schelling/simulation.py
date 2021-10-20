@@ -29,6 +29,8 @@ class Simulation:
     def generate_players(self) -> None:
         """
         """
+        assert (sum(self.groups.values()) + self.empty) == 1, "Group percentages and empty do not sum to 1."
+
         n_squares = self.shape[0] * self.shape[1]
         players = []
         for g, f in self.groups.items():
@@ -53,11 +55,9 @@ class Simulation:
     def repopulate(self) -> None:
         # TO DO: ACCOUNT FOR RESOURCES
         rng = np.random.default_rng()
-        shuffled_p = rng.permutation(len(self.unhappy_p) - 1)
+        shuffled_p = rng.permutation(range(len(self.unhappy_p)))
 
         for i in shuffled_p:
-            if self.animate:
-                self.display()
             # Shuffle empty locs for no bias
             self.empty_locs = rng.permutation(self.empty_locs).tolist()
             new_i = tuple(self.empty_locs.pop(0))
@@ -105,6 +105,7 @@ class Simulation:
 
         ### Plot grid
         plt.matshow(display, cmap=cmap)
+        plt.show()
 
 
     def run_simulation(self):
@@ -113,7 +114,11 @@ class Simulation:
         # Generate players in grid
         self.generate_players()
         # CHANGE TO WHILE LOOP
-        for _ in range(100):
+        # TO DO: account for case when empty=0?
+        moving = True
+        while moving:
+            if self.animate:
+                self.display()
 
             self.empty_locs = []
             self.unhappy_locs = []
@@ -135,8 +140,11 @@ class Simulation:
                 # If square empty, store its location for repopulate
                 else:
                     self.empty_locs.append(loc)
-                    
-            self.repopulate()
+            
+            if len(self.unhappy_locs) > 0:
+                self.repopulate()
+            else:
+                moving = False
 
             
 

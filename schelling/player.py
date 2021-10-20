@@ -30,7 +30,7 @@ class Player:
             if same / (same + dif) >= self.similar:
                 happy = True
         except ZeroDivisionError:
-            pass
+            happy = True
 
         return happy
 
