@@ -160,14 +160,10 @@ class Simulation:
                     self.empty_locs.append(loc)
             
             if len(self.unhappy_locs) > 0:
-                print(len(unhappy_locs))
+                print(len(self.unhappy_locs))
                 self.repopulate()
             else:
                 moving = False
                 # Create gif
                 if self.animate:
                     self.write_gif()
-
-
-
-            
