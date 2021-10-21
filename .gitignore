@@ -131,3 +131,5 @@ dmypy.json
 # launch.json
 
 launch.json
+
+*.gif

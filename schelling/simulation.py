@@ -5,6 +5,9 @@ import numpy as np
 from copy import deepcopy
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BASE_COLORS
+import imageio
+from pathlib import Path
+import os
 
 # TO DO: cost para extensao dos resources
 
@@ -25,11 +28,12 @@ class Simulation:
         self.player_kw = player_kw
         self.seed = seed
         self.animate = animate
+        self.frames = []
 
     def generate_players(self) -> None:
         """
         """
-        assert (sum(self.groups.values()) + self.empty) == 1, "Group percentages and empty do not sum to 1."
+        assert round((sum(self.groups.values()) + self.empty), 5) == 1, "Group percentages and empty do not sum to 1."
 
         n_squares = self.shape[0] * self.shape[1]
         players = []
@@ -70,13 +74,13 @@ class Simulation:
             self.grid.array[deepcopy(self.unhappy_locs[i])] = 0
 
 
-    def display(self):
+    def display(self, iteration: int):
         """
         Displays array with matshow
         """
         ### Colors
         cdict = {
-            0: 0
+            "0": 0
         }
         cdict.update({
             k: i + 1 for i, k in enumerate(self.groups.keys())
@@ -105,7 +109,19 @@ class Simulation:
 
         ### Plot grid
         plt.matshow(display, cmap=cmap)
-        plt.show()
+        plt.title(f"Iteration: {iteration}")
+        plt.savefig(f"images/{iteration}.png")
+
+    def write_gif(self):
+        """
+        Writes gif with plots
+        """
+        with imageio.get_writer('sim.gif', mode='I', fps=6) as writer:
+            path = Path('.').absolute() / 'images'
+            for p in sorted(path.iterdir(), key=os.path.getmtime):
+                im = imageio.imread(p)
+                writer.append_data(im)
+                p.unlink()
 
 
     def run_simulation(self):
@@ -116,9 +132,11 @@ class Simulation:
         # CHANGE TO WHILE LOOP
         # TO DO: account for case when empty=0?
         moving = True
+        iteration = 1
         while moving:
             if self.animate:
-                self.display()
+                self.display(iteration)
+                iteration += 1
 
             self.empty_locs = []
             self.unhappy_locs = []
@@ -142,11 +160,13 @@ class Simulation:
                     self.empty_locs.append(loc)
             
             if len(self.unhappy_locs) > 0:
+                print(len(unhappy_locs))
                 self.repopulate()
             else:
                 moving = False
-
-            
+                # Create gif
+                if self.animate:
+                    self.write_gif()
 
 
 
