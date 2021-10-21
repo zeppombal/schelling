@@ -19,3 +19,5 @@ sim = Simulation(groups, shape, empty, player_kw)
 sim.generate_players()
 
 sim.run_simulation()
+
+# test
