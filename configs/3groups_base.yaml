@@ -9,6 +9,8 @@ shape:
   - 50
   - 50
 
+is_costs: True
+
 similar_list:
   - 0.5
   - 0.5

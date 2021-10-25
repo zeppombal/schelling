@@ -16,6 +16,7 @@ class Simulation:
                  groups: Dict[str, float],
                  shape: List[int],
                  empty: float,
+                 is_costs: bool,
                  similar_list: List[float],
                  resources_list: List[int],
                  adaptivities_list: List[float],
@@ -26,6 +27,7 @@ class Simulation:
         self.grid = Grid(shape)
         self.shape = tuple(shape)
         self.empty = empty
+        self.is_costs = is_costs
 
         assert len(groups) == len(similar_list) == len(resources_list) == len(adaptivities_list), "Length of groups and params lists are not equal."
         self.player_kw = generate_kwargs(groups, similar_list, resources_list, adaptivities_list)
@@ -60,6 +62,20 @@ class Simulation:
 
         self.grid.array = np.reshape(shuffled_players, self.shape)
 
+    def filter_locs(self, player):
+        """
+        """
+        out_locs = []
+        for l in self.empty_locs:
+            l1 = abs(l[0] - player.location[0])
+            l2 = abs(l[1] - player.location[1])
+            # Cost of moving. Not parameterizable
+            cost = 1 + 3 * np.log(max(l1, l2))
+
+            if player.resources >= cost:
+                out_locs.append(l)
+        
+        return out_locs
 
     def repopulate(self) -> None:
         # TO DO: ACCOUNT FOR RESOURCES
@@ -69,8 +85,16 @@ class Simulation:
         for i in shuffled_p:
             # Shuffle empty locs for no bias
             self.empty_locs = rng.permutation(self.empty_locs).tolist()
-            new_i = tuple(self.empty_locs.pop(0))
 
+            # determine which locations are accessible to player, given resources
+            if self.is_costs:
+                filtered_locs = self.filter_locs(self.unhappy_p[i])
+                loc = filtered_locs.pop(0)
+            else:
+                loc = self.empty_locs[0]
+                
+            # take loc from empty locs
+            new_i = tuple(self.empty_locs.pop(self.empty_locs.index(loc)))
             # Put player in an empty loc
             self.grid.array[new_i] = deepcopy(self.unhappy_p[i])
             # Put loc where player was in empty locs
