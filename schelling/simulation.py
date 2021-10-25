@@ -14,7 +14,7 @@ class Simulation:
 
     def __init__(self,
                  groups: Dict[str, float],
-                 shape: Tuple[int],
+                 shape: List[int],
                  empty: float,
                  similar_list: List[float],
                  resources_list: List[int],
@@ -23,9 +23,12 @@ class Simulation:
 
         self.groups = groups
         self.grid = Grid(shape)
-        self.shape = shape
+        self.shape = tuple(shape)
         self.empty = empty
+
+        assert len(groups) == len(similar_list) == len(resources_list), "Length of groups and params lists are not equal."
         self.player_kw = generate_kwargs(groups, similar_list, resources_list)
+        
         self.seed = seed
         self.animate = animate
         self.frames = []

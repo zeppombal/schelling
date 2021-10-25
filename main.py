@@ -1,21 +1,10 @@
 from schelling import *
+import yaml
 
-# Put this part in a config folder or something
-groups = {
-    "blue": 0.3,
-    "red": 0.3,
-    "green": 0.3
-}
-shape = (50, 50)
-empty = 0.10
-similar_list = [0.4, 0.4, 0.4]
-resources_list = [200, 200, 200]
+with open(Path('.').absolute() / 'configs' / 'base.yaml') as f:
+    config = yaml.safe_load(f)
 
-sim = Simulation(groups=groups, 
-                 shape=shape,
-                 empty=empty,
-                 similar_list=similar_list,
-                 resources_list=resources_list)
+sim = Simulation(**config)
 
 sim.generate_players()
 

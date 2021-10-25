@@ -1,3 +1,3 @@
-from .grid import Grid
-from .player import Player
-from .simulation import Simulation
+from .grid import *
+from .player import *
+from .simulation import *
