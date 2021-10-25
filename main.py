@@ -9,6 +9,4 @@ with open(Path('.').absolute() / 'configs' / f'3groups_base.yaml') as f:
 
 sim = Simulation(**config)
 
-sim.generate_players()
-
 sim.run_simulation()
