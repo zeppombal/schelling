@@ -1,13 +1,12 @@
 from .player import Player
 from .grid import Grid
+from .utils import *
+
 from typing import *
 import numpy as np
 from copy import deepcopy
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BASE_COLORS
-import imageio
-from pathlib import Path
-import os
 
 # TO DO: cost para extensao dos resources
 
@@ -17,7 +16,8 @@ class Simulation:
                  groups: Dict[str, float],
                  shape: Tuple[int],
                  empty: float,
-                 player_kw: Dict[Any, Any],
+                 similar_list: List[float],
+                 resources_list: List[int],
                  seed=None,
                  animate=True):
 
@@ -25,7 +25,7 @@ class Simulation:
         self.grid = Grid(shape)
         self.shape = shape
         self.empty = empty
-        self.player_kw = player_kw
+        self.player_kw = generate_kwargs(groups, similar_list, resources_list)
         self.seed = seed
         self.animate = animate
         self.frames = []
@@ -43,7 +43,8 @@ class Simulation:
             if g == "empty":
                 new_players = [0 for _ in range(n)]
             else:
-                new_players = [Player(group=g, **self.player_kw) for _ in range(n)]
+                p_kw = handle_kwargs(g, self.player_kw)
+                new_players = [Player(group=g, **p_kw) for _ in range(n)]
 
             players.extend(new_players)
 
@@ -112,17 +113,6 @@ class Simulation:
         plt.title(f"Iteration: {iteration}")
         plt.savefig(f"images/{iteration}.png")
 
-    def write_gif(self):
-        """
-        Writes gif with plots
-        """
-        with imageio.get_writer('sim.gif', mode='I', fps=6) as writer:
-            path = Path('.').absolute() / 'images'
-            for p in sorted(path.iterdir(), key=os.path.getmtime):
-                im = imageio.imread(p)
-                writer.append_data(im)
-                p.unlink()
-
 
     def run_simulation(self):
         """
@@ -166,4 +156,4 @@ class Simulation:
                 moving = False
                 # Create gif
                 if self.animate:
-                    self.write_gif()
+                    write_gif()

@@ -8,13 +8,14 @@ groups = {
 }
 shape = (50, 50)
 empty = 0.10
+similar_list = [0.4, 0.4, 0.4]
+resources_list = [200, 200, 200]
 
-player_kw = {
-    "similar": 0.5,
-    "resources": 200
-}
-
-sim = Simulation(groups, shape, empty, player_kw)
+sim = Simulation(groups=groups, 
+                 shape=shape,
+                 empty=empty,
+                 similar_list=similar_list,
+                 resources_list=resources_list)
 
 sim.generate_players()
 
