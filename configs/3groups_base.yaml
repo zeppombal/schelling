@@ -1,0 +1,20 @@
+groups:
+  blue: 0.3
+  red: 0.3
+  green: 0.3
+
+empty: 0.1
+
+shape:
+  - 50
+  - 50
+
+similar_list:
+  - 0.5
+  - 0.5
+  - 0.5
+
+resources_list:
+  - 200
+  - 200
+  - 200
