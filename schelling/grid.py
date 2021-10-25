@@ -26,8 +26,8 @@ class Grid:
         """
         """
         neighbors = []
-        for x in [-1, 0, 1]:
-            for y in [-1, 0, 1]:
+        for x in [-2, -1, 0, 1, 2]:
+            for y in [-2, -1, 0, 1, 2]:
                 if not (x == 0 and y == 0):
                     neighbor_loc = location + np.array([x, y])
                     

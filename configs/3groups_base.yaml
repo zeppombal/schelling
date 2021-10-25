@@ -1,9 +1,9 @@
 groups:
-  blue: 0.3
-  red: 0.3
-  green: 0.3
+  blue: 0.25
+  red: 0.25
+  green: 0.25
 
-empty: 0.1
+empty: 0.25
 
 shape:
   - 50
@@ -18,3 +18,8 @@ resources_list:
   - 200
   - 200
   - 200
+
+adaptivities_list:
+  - 0.001
+  - 0.001
+  - 0.001

@@ -18,6 +18,7 @@ class Simulation:
                  empty: float,
                  similar_list: List[float],
                  resources_list: List[int],
+                 adaptivities_list: List[float],
                  seed=None,
                  animate=True):
 
@@ -26,8 +27,8 @@ class Simulation:
         self.shape = tuple(shape)
         self.empty = empty
 
-        assert len(groups) == len(similar_list) == len(resources_list), "Length of groups and params lists are not equal."
-        self.player_kw = generate_kwargs(groups, similar_list, resources_list)
+        assert len(groups) == len(similar_list) == len(resources_list) == len(adaptivities_list), "Length of groups and params lists are not equal."
+        self.player_kw = generate_kwargs(groups, similar_list, resources_list, adaptivities_list)
         
         self.seed = seed
         self.animate = animate
@@ -153,7 +154,7 @@ class Simulation:
                     self.empty_locs.append(loc)
             
             if len(self.unhappy_locs) > 0:
-                print(len(self.unhappy_locs))
+                print(f"Iter {iteration}: {len(self.unhappy_locs)}")
                 self.repopulate()
             else:
                 moving = False
