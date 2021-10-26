@@ -4,9 +4,9 @@ groups:
 
 empty: 0.1
 
-is_costs: False
+is_costs: True
 
-is_smart: False
+is_smart: True
 
 shape:
   - 50

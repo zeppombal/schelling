@@ -17,6 +17,7 @@ class Simulation:
                  shape: List[int],
                  empty: float,
                  is_costs: bool,
+                 is_smart: bool,
                  similar_list: List[float],
                  resources_list: List[int],
                  adaptivities_list: List[float],
@@ -28,6 +29,7 @@ class Simulation:
         self.shape = tuple(shape)
         self.empty = empty
         self.is_costs = is_costs
+        self.is_smart = is_smart
 
         assert len(groups) == len(similar_list) == len(resources_list) == len(adaptivities_list), "Length of groups and params lists are not equal."
         self.player_kw = generate_kwargs(groups, similar_list, resources_list, adaptivities_list)
@@ -62,11 +64,13 @@ class Simulation:
 
         self.grid.array = np.reshape(shuffled_players, self.shape)
 
-    def filter_locs(self, player):
+
+    def resource_filter(self, empty_locs, player):
         """
+        Filters location, given resource availability
         """
         out_locs = []
-        for l in self.empty_locs:
+        for l in empty_locs:
             l1 = abs(l[0] - player.location[0])
             l2 = abs(l[1] - player.location[1])
             # Cost of moving. Not parameterizable
@@ -77,30 +81,69 @@ class Simulation:
         
         return out_locs
 
+
+    def smart_ranker(self, empty_locs, player):
+        """
+        Chooses the location with highest neighbor happiness
+        """
+        same = 0
+        best_ratio = 0
+        best_loc = empty_locs[0]
+        for l in empty_locs:
+            # Get neigbouring locations
+            neighbors = self.grid.get_neighbors(l)
+            for n in neighbors:
+                if n.group == player.group:
+                    same += 1
+
+            try:
+                ratio = same / len(neighbors)
+            except ZeroDivisionError:
+                ratio = 0
+            
+            if ratio > best_ratio:
+                best_loc = l
+        
+        return best_loc
+
+
     def repopulate(self) -> None:
         # TO DO: ACCOUNT FOR RESOURCES
         rng = np.random.default_rng()
         shuffled_p = rng.permutation(range(len(self.unhappy_p)))
 
+        resourceless = 0
+
         for i in shuffled_p:
             # Shuffle empty locs for no bias
-            self.empty_locs = rng.permutation(self.empty_locs).tolist()
+            subset_locs = rng.choice(self.empty_locs, size=min(len(self.empty_locs), 20), replace=False).tolist()
 
             # determine which locations are accessible to player, given resources
             if self.is_costs:
-                filtered_locs = self.filter_locs(self.unhappy_p[i])
-                loc = filtered_locs.pop(0)
+                subset_locs = self.resource_filter(subset_locs, self.unhappy_p[i])
+
+            # Player can afford some move
+            if len(subset_locs) > 0:
+            # Determine which location has highest same-group density
+                if self.is_smart:
+                    loc = self.smart_ranker(subset_locs, self.unhappy_p[i])
+                else:
+                    loc = subset_locs[0]
+
+                # take loc from empty locs
+                self.empty_locs = [l for l in self.empty_locs if l != tuple(loc)]
+                # Put player in an empty loc
+                self.grid.array[tuple(loc)] = deepcopy(self.unhappy_p[i])
+                # Put loc where player was in empty locs
+                self.empty_locs.append(deepcopy(self.unhappy_locs[i]))
+                # Empty where the player was
+                self.grid.array[deepcopy(self.unhappy_locs[i])] = 0
+            # Player cannot afford a move
             else:
-                loc = self.empty_locs[0]
-                
-            # take loc from empty locs
-            new_i = tuple(self.empty_locs.pop(self.empty_locs.index(loc)))
-            # Put player in an empty loc
-            self.grid.array[new_i] = deepcopy(self.unhappy_p[i])
-            # Put loc where player was in empty locs
-            self.empty_locs.append(deepcopy(self.unhappy_locs[i]))
-            # Empty where the player was
-            self.grid.array[deepcopy(self.unhappy_locs[i])] = 0
+                resourceless += 1
+        
+        if len(self.unhappy_p) == resourceless:
+            self.end()
 
 
     def display(self, iteration: int):
@@ -149,12 +192,11 @@ class Simulation:
         self.generate_players()
         # CHANGE TO WHILE LOOP
         # TO DO: account for case when empty=0?
-        moving = True
+        self.moving = True
         iteration = 1
-        while moving:
+        while self.moving:
             if self.animate:
                 self.display(iteration)
-                iteration += 1
 
             self.empty_locs = []
             self.unhappy_locs = []
@@ -177,11 +219,18 @@ class Simulation:
                 else:
                     self.empty_locs.append(loc)
             
-            if len(self.unhappy_locs) > 0:
+            if len(self.unhappy_locs) > 0 and len(self.empty_locs) > 0:
                 print(f"Iter {iteration}: {len(self.unhappy_locs)}")
                 self.repopulate()
+                iteration += 1
             else:
-                moving = False
-                # Create gif
-                if self.animate:
-                    write_gif()
+                self.end()
+
+
+    def end(self):
+        """
+        Ends simulation, and wirtes gif.
+        """
+        self.moving = False
+        if self.animate:
+            write_gif()

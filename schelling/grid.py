@@ -22,9 +22,11 @@ class Grid:
 
         return exists
 
-    def get_neighbors(self, location: np.array) -> float:
+    def get_neighbors(self, location: np.array) -> List[Any]:
         """
+        Returns list of player neighbors for a given location
         """
+        location = np.array(location)
         neighbors = []
         for x in [-2, -1, 0, 1, 2]:
             for y in [-2, -1, 0, 1, 2]:
