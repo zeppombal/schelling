@@ -71,11 +71,7 @@ class Simulation:
         """
         out_locs = []
         for l in empty_locs:
-            l1 = abs(l[0] - player.location[0])
-            l2 = abs(l[1] - player.location[1])
-            # Cost of moving. Not parameterizable
-            cost = 1 + 3 * np.log(max(l1, l2))
-
+            cost = calc_cost(l, player.location)
             if player.resources >= cost:
                 out_locs.append(l)
         
@@ -138,6 +134,11 @@ class Simulation:
                 self.empty_locs.append(deepcopy(self.unhappy_locs[i]))
                 # Empty where the player was
                 self.grid.array[deepcopy(self.unhappy_locs[i])] = 0
+                
+                if self.is_costs:
+                    # Deduct cost of moving from player resources
+                    cost = calc_cost(loc, self.unhappy_p[i].location)
+                    self.unhappy_p[i].resources -= cost
             # Player cannot afford a move
             else:
                 resourceless += 1
@@ -262,7 +263,8 @@ class Simulation:
         interface_density = dif_edges / total_edges
         print(f"{interface_density=}")
         for k in sims.keys():
-            print(f"Avg sims {g}: {np.mean(sims[k])}")
+            print(f"Avg sims {k}: {np.mean(sims[k])}")
+            print(f"Avg resources {k}: {np.mean(resources[k])}")
 
         return interface_density, sims, resources
 
