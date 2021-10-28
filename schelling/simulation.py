@@ -227,10 +227,52 @@ class Simulation:
                 self.end()
 
 
+    def evaluate(self) -> Tuple[Any]:
+        """
+        Collects and outputs relevant statistics of the final grid
+        """
+        sims = {k: [] for k in self.groups.keys()}
+        resources = {k: [] for k in self.groups.keys()}
+
+        dif_edges = 0
+        total_edges = 0
+        visited_pairs = {}
+        for p in self.grid.array.flatten():
+            if p != 0:
+                g = p.group
+                sims[g].append(p.similar)
+                resources[g].append(p.resources)
+                neighbors = self.grid.get_neighbors(p.location)
+                for n in neighbors:
+                    # If pair has been visited, do not count
+                    try:
+                        if visited_pairs[tuple([p, n])] == "visited" and visited_pairs[tuple([n, p])] == "visited":
+                            continue
+                    except KeyError:
+                        # Pair visited
+                        visited_pairs[tuple([p, n])] = "visited"
+                        visited_pairs[tuple([n, p])] = "visited"
+                        
+                        total_edges += 1
+                        if n.group != g:
+                            dif_edges += 1      
+            else:
+                continue
+
+        interface_density = dif_edges / total_edges
+        print(f"{interface_density=}")
+        for k in sims.keys():
+            print(f"Avg sims {g}: {np.mean(sims[k])}")
+
+        return interface_density, sims, resources
+
+
+
     def end(self):
         """
-        Ends simulation, and wirtes gif.
+        Ends simulation, and writes gif.
         """
+        self.evaluate()
         self.moving = False
         if self.animate:
             write_gif()

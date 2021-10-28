@@ -7,8 +7,10 @@ class Grid:
         
         self.array = np.zeros(shape)
 
+
     def loc_exists(self, neighbor_loc):
         """
+        Assess whether loc exists. Returns false also if the location is empty
         """
         exists = True
         for i in [0, 1]:

@@ -12,7 +12,7 @@ class Player:
                  ):
         
         self.group = group
-        self.similar = sample(similar)
+        self.similar = similar # sample(similar) METER SAMPLE DE VOLTA PARA EVAL
         self.resources = resources
         self.adaptivity = adaptivity
         self.location = np.array([0, 0])
