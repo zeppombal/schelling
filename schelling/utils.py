@@ -41,7 +41,7 @@ def write_gif(name, folder: str = 'images'):
     Writes gif with plots. 
     folder is folder in the repository where images are located
     """
-    with imageio.get_writer(f'gifs/{name}.gif', mode='I', fps=6) as writer:
+    with imageio.get_writer(Path('.').absolute() / 'gifs' / f"{name}.gif", mode='I', fps=6) as writer:
         path = Path('.').absolute() / folder / name
         for p in sorted(path.iterdir(), key=os.path.getmtime):
             im = imageio.imread(p)
