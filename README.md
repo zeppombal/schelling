@@ -2,13 +2,13 @@
 Generalized Schelling Model of Segregation
 
 ### Repository structure
-  - main.py: file to use when running simulations.
-  - schelling/: folder with source code for the simulation.
-  - configs/: folder with configurations of the experiments used for the report.
+  - [main.py](main.py): file to use when running simulations.
+  - [schelling](/schelling): folder with source code for the simulation.
+  - [configs](/configs): folder with configurations of the experiments used for the report.
  
  ### How to run
   - For Python >= 3.8, install dependencies on requirements.txt
-  - Use an existing config, or write a YAML configuration file for the experiment you wish to run. The parameters are as follows:
+  - Use an existing [config](/configs) (e.g.: [base](/configs/base.yaml)), or write a YAML configuration file for the experiment you wish to run. The parameters are as follows:
     - groups: dict - keys are group names, and values are there percentage on the grid. For example "blue: 0.5" means that the blue group will occupy 50% of the grid's squares.
     - empty: float - percentage of empty squares in the grid.
     - is_costs: bool - if True, players spend resources to move squares at each iteration. The farther the square, the more resources spent.
