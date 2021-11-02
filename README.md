@@ -1,5 +1,5 @@
 # crc-proj
-CRC Project (Generalized Schelling Model of Segregation)
+Generalized Schelling Model of Segregation
 
 ### Repository structure
   - main.py: file to use when running simulations.
