@@ -1,12 +1,12 @@
 # crc-proj
 CRC Project (Generalized Schelling Model of Segregation)
 
-#### Repository structure
+### Repository structure
   - main.py: file to use when running simulations.
   - schelling/: folder with source code for the simulation.
   - configs/: folder with configurations of the experiments used for the report.
  
- #### How to run
+ ### How to run
   - For Python >= 3.8, install dependencies on requirements.txt
   - Use an existing config, or write a YAML configuration file for the experiment you wish to run. The parameters are as follows:
     - <groups>: dict - keys are group names, and values are there percentage on the grid. For example "blue: 0.5" means that the blue group will occupy 50% of the grid's squares.
