@@ -4,9 +4,10 @@ import sys
 
 #with open(Path('.').absolute() / 'configs' / f'{sys.argv[1]}.yaml') as f:
 #    config = yaml.safe_load(f)
-with open(Path('.').absolute() / 'configs' / f'base_resource_smart.yaml') as f:
+path = 'base'
+with open(Path('.').absolute() / 'configs' / f"{path}.yaml") as f:
     config = yaml.safe_load(f)
 
-sim = Simulation(**config)
+sim = Simulation(**config, path=path)
 
 sim.run_simulation()

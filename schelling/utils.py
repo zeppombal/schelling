@@ -36,17 +36,16 @@ def handle_kwargs(g, kw: Dict[str, Any]) -> Dict[str, Any]:
     return out_dict
 
 
-def write_gif(folder: str = 'images'):
+def write_gif(name, folder: str = 'images'):
     """
     Writes gif with plots. 
     folder is folder in the repository where images are located
     """
-    with imageio.get_writer('sim.gif', mode='I', fps=6) as writer:
-        path = Path('.').absolute() / folder
+    with imageio.get_writer(f'gifs/{name}.gif', mode='I', fps=6) as writer:
+        path = Path('.').absolute() / folder / name
         for p in sorted(path.iterdir(), key=os.path.getmtime):
             im = imageio.imread(p)
             writer.append_data(im)
-            p.unlink()
 
 def sample(center: float, std: float = 0.1) -> float:
     """

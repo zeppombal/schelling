@@ -21,6 +21,7 @@ class Simulation:
                  similar_list: List[float],
                  resources_list: List[int],
                  adaptivities_list: List[float],
+                 path: str,
                  seed=None,
                  animate=True):
 
@@ -34,6 +35,7 @@ class Simulation:
         assert len(groups) == len(similar_list) == len(resources_list) == len(adaptivities_list), "Length of groups and params lists are not equal."
         self.player_kw = generate_kwargs(groups, similar_list, resources_list, adaptivities_list)
         
+        self.path = path
         self.seed = seed
         self.animate = animate
         self.frames = []
@@ -128,17 +130,18 @@ class Simulation:
 
                 # take loc from empty locs
                 self.empty_locs = [l for l in self.empty_locs if l != tuple(loc)]
+                unhappy_location = deepcopy(self.unhappy_locs[i])
                 # Put player in an empty loc
                 self.grid.array[tuple(loc)] = deepcopy(self.unhappy_p[i])
                 # Put loc where player was in empty locs
-                self.empty_locs.append(deepcopy(self.unhappy_locs[i]))
+                self.empty_locs.append(unhappy_location)
                 # Empty where the player was
-                self.grid.array[deepcopy(self.unhappy_locs[i])] = 0
-                
                 if self.is_costs:
                     # Deduct cost of moving from player resources
                     cost = calc_cost(loc, self.unhappy_p[i].location)
-                    self.unhappy_p[i].resources -= cost
+                    self.grid.array[tuple(loc)].resources -= cost
+                self.grid.array[unhappy_location] = 0
+            
             # Player cannot afford a move
             else:
                 resourceless += 1
@@ -181,9 +184,11 @@ class Simulation:
         display = display.astype(np.int64)
 
         ### Plot grid
+        p = Path('.').absolute() / 'images' / self.path
+        p.mkdir(parents=True, exist_ok=True)
         plt.matshow(display, cmap=cmap)
         plt.title(f"Iteration: {iteration}")
-        plt.savefig(f"images/{iteration}.png")
+        plt.savefig(p / f"{self.path}-{iteration}.png")
 
 
     def run_simulation(self):
@@ -277,4 +282,4 @@ class Simulation:
         self.evaluate()
         self.moving = False
         if self.animate:
-            write_gif()
+            write_gif(name=self.path)

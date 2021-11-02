@@ -133,4 +133,4 @@ dmypy.json
 launch.json
 
 *.gif
-images/*
+*.png
