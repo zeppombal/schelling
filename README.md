@@ -5,6 +5,8 @@ Generalized Schelling Model of Segregation
   - [main.py](main.py): file to use when running simulations.
   - [schelling](/schelling): folder with source code for the simulation.
   - [configs](/configs): folder with configurations of the experiments used for the report.
+  - [images](/images): folder with images of each iteration of experiments.
+  - [gifs](/gifs): folder with animations of experiments.
  
  ### How to run
   - For Python >= 3.8, install dependencies on requirements.txt
