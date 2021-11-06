@@ -33,6 +33,7 @@ def run_experiment(path, runs):
         config = yaml.safe_load(f)
     results_dicts = list()
     for r in range(runs):
+        print(f'exp {path}, run {r+1}/{runs} ---------------------------------')
         sim = Simulation(**config, path=path)
         if r == 0:
             sim.animate = True
