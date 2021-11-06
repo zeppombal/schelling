@@ -1,13 +1,14 @@
 from schelling import *
+from experiement_functions import *
+
 import yaml
-import sys
 
-#with open(Path('.').absolute() / 'configs' / f'{sys.argv[1]}.yaml') as f:
-#    config = yaml.safe_load(f)
 path = 'base'
-with open(Path('.').absolute() / 'configs' / f"{path}.yaml") as f:
-    config = yaml.safe_load(f)
+run_experiment(path, runs=50)
 
-sim = Simulation(**config, path=path)
 
-sim.run_simulation()
+path = 'base_resource_smart'
+#run_experiment(path, runs=500)
+
+path = '3groups_base'
+#run_experiment(path, runs=500)

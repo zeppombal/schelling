@@ -7,8 +7,8 @@ import numpy as np
 from copy import deepcopy
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BASE_COLORS
+from statistics import mean
 
-# TO DO: cost para extensao dos resources
 
 class Simulation:
 
@@ -18,6 +18,7 @@ class Simulation:
                  empty: float,
                  is_costs: bool,
                  is_smart: bool,
+                 max_iters: int,
                  similar_list: List[float],
                  resources_list: List[int],
                  adaptivities_list: List[float],
@@ -31,6 +32,7 @@ class Simulation:
         self.empty = empty
         self.is_costs = is_costs
         self.is_smart = is_smart
+        self.max_iters = max_iters
 
         assert len(groups) == len(similar_list) == len(resources_list) == len(adaptivities_list), "Length of groups and params lists are not equal."
         self.player_kw = generate_kwargs(groups, similar_list, resources_list, adaptivities_list)
@@ -106,7 +108,7 @@ class Simulation:
 
 
     def repopulate(self) -> None:
-        # TO DO: ACCOUNT FOR RESOURCES
+        
         rng = np.random.default_rng()
         shuffled_p = rng.permutation(range(len(self.unhappy_p)))
 
@@ -196,8 +198,6 @@ class Simulation:
         """
         # Generate players in grid
         self.generate_players()
-        # CHANGE TO WHILE LOOP
-        # TO DO: account for case when empty=0?
         self.moving = True
         iteration = 1
         while self.moving:
@@ -225,12 +225,16 @@ class Simulation:
                 else:
                     self.empty_locs.append(loc)
             
-            if len(self.unhappy_locs) > 0 and len(self.empty_locs) > 0:
+            c1 = len(self.unhappy_locs) > 0
+            c2 = len(self.empty_locs) > 0
+            c3 = iteration < self.max_iters
+            if c1 and c2 and c3:
                 print(f"Iter {iteration}: {len(self.unhappy_locs)}")
                 self.repopulate()
                 iteration += 1
             else:
-                self.end()
+                results = self.end()
+                return results
 
 
     def evaluate(self) -> Tuple[Any]:
@@ -264,14 +268,21 @@ class Simulation:
                             dif_edges += 1      
             else:
                 continue
+        
+        results = dict()
 
-        interface_density = dif_edges / total_edges
-        print(f"{interface_density=}")
+        results['interface_density'] = dif_edges / total_edges
+        print(f"Interface density: {results['interface_density']}")
+
+        results['avg_sims'] = dict()
+        results['avg_resources'] = dict()
         for k in sims.keys():
-            print(f"Avg sims {k}: {np.mean(sims[k])}")
-            print(f"Avg resources {k}: {np.mean(resources[k])}")
+            results['avg_sims'][k] = mean(sims[k])
+            results['avg_resources'][k] = mean(resources[k])
+            print(f"Avg sims {k}: {results['avg_sims'][k]}")
+            print(f"Avg resources {k}: {results['avg_resources'][k]}")
 
-        return interface_density, sims, resources
+        return results
 
 
 
@@ -279,7 +290,8 @@ class Simulation:
         """
         Ends simulation, and writes gif.
         """
-        self.evaluate()
+        results = self.evaluate()
         self.moving = False
         if self.animate:
             write_gif(name=self.path)
+        return results

@@ -1,0 +1,13 @@
+avg_interface_density: 0.1582254910497692
+avg_resources:
+  blue: 200
+  red: 200
+avg_sims:
+  blue: 0.4
+  red: 0.4
+stdev_resources:
+  blue: 0.0
+  red: 0.0
+stdev_sims:
+  blue: 0.0
+  red: 0.0

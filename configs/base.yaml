@@ -8,6 +8,8 @@ is_costs: False
 
 is_smart: False
 
+max_iters: 100
+
 shape:
   - 50
   - 50
