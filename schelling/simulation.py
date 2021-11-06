@@ -274,6 +274,8 @@ class Simulation:
         results['interface_density'] = dif_edges / total_edges
         print(f"Interface density: {results['interface_density']}")
 
+        results['unhappy'] = self.unhappy_locs
+
         results['avg_sims'] = dict()
         results['avg_resources'] = dict()
         for k in sims.keys():

@@ -3,18 +3,23 @@ import yaml
 from statistics import mean, stdev
 
 
-def summarize_results(path, results_dicts):
+def summarize_results(path, groups, results_dicts):
     
     exp_results = dict()
-    exp_results['avg_interface_density'] = mean(
-        [r['interface_density'] for r in results_dicts])
-    keys = ['blue', 'red']
+    interface_density_list = [r['interface_density'] for r in results_dicts]]
+    exp_results['avg_interface_density'] = mean(interface_density_list)
+    exp_results['stdev_interface_density'] = stdev(interface_density_list)
+
+    unhappy_list = [r['interface_density'] for r in results_dicts]]
+    exp_results['avg_unhappy'] = mean(unhappy_list)
+    exp_results['stdev_unhappy'] = stdev(unhappy_list)
+
     exp_results['avg_sims'] = dict()
     exp_results['stdev_sims'] = dict()
     exp_results['avg_resources'] = dict()
     exp_results['stdev_resources'] = dict()
 
-    for k in keys:
+    for k in groups:
         avg_sims_list_k = [r['avg_sims'][k] for r in results_dicts]
         exp_results['avg_sims'][k] = mean(avg_sims_list_k)
         exp_results['stdev_sims'][k] = stdev(avg_sims_list_k)
