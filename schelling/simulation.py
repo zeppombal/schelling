@@ -107,7 +107,7 @@ class Simulation:
         return best_loc
 
 
-    def repopulate(self) -> None:
+    def repopulate(self, iter) -> None:
         
         rng = np.random.default_rng()
         shuffled_p = rng.permutation(range(len(self.unhappy_p)))
@@ -149,7 +149,7 @@ class Simulation:
                 resourceless += 1
         
         if len(self.unhappy_p) == resourceless:
-            self.end()
+            self.end(iter)
 
 
     def display(self, iteration: int):
@@ -230,7 +230,7 @@ class Simulation:
             c3 = iteration <= self.max_iters
             if c1 and c2 and c3:
                 print(f"Iter {iteration}: {len(self.unhappy_locs)}")
-                self.repopulate()
+                self.repopulate(iteration)
                 iteration += 1
             else:
                 results = self.end(iteration)
