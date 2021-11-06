@@ -227,7 +227,7 @@ class Simulation:
             
             c1 = len(self.unhappy_locs) > 0
             c2 = len(self.empty_locs) > 0
-            c3 = iteration < self.max_iters
+            c3 = iteration <= self.max_iters
             if c1 and c2 and c3:
                 print(f"Iter {iteration}: {len(self.unhappy_locs)}")
                 self.repopulate()
@@ -275,7 +275,7 @@ class Simulation:
         results['interface_density'] = dif_edges / total_edges
         print(f"Interface density: {results['interface_density']}")
 
-        results['unhappy'] = self.unhappy_locs
+        results['unhappy'] = len(self.unhappy_locs)
 
         results['avg_sims'] = dict()
         results['avg_resources'] = dict()

@@ -7,31 +7,22 @@ def summarize_results(path, groups, results_dicts):
     
     exp_results = dict()
 
-    last_iter_list = [r['last_iter'] for r in results_dicts]
-    exp_results['avg_last_iter'] = mean(last_iter_list)
-    exp_results['stdev_last_iter'] = stdev(last_iter_list)
+    measures = results_dicts[0].keys()
+    per_group_measures, overarching_measures = [], []
+    for m in measures:
+        if isinstance(results_dicts[0][m], dict):
+            per_group_measures.append(m)
+        else:
+            overarching_measures.append(m)
 
-    interface_density_list = [r['interface_density'] for r in results_dicts]
-    exp_results['avg_interface_density'] = mean(interface_density_list)
-    exp_results['stdev_interface_density'] = stdev(interface_density_list)
-
-    unhappy_list = [r['interface_density'] for r in results_dicts]
-    exp_results['avg_unhappy'] = mean(unhappy_list)
-    exp_results['stdev_unhappy'] = stdev(unhappy_list)
-
-    exp_results['avg_sims'] = dict()
-    exp_results['stdev_sims'] = dict()
-    exp_results['avg_resources'] = dict()
-    exp_results['stdev_resources'] = dict()
-
-    for k in groups:
-        avg_sims_list_k = [r['avg_sims'][k] for r in results_dicts]
-        exp_results['avg_sims'][k] = mean(avg_sims_list_k)
-        exp_results['stdev_sims'][k] = stdev(avg_sims_list_k)
-
-        avg_resources_list_k = [r['avg_resources'][k] for r in results_dicts]
-        exp_results['avg_resources'][k] = mean(avg_resources_list_k)
-        exp_results['stdev_resources'][k] = stdev(avg_resources_list_k)
+    for m in overarching_measures:
+        m_list = [r[m] for r in results_dicts]
+        exp_results[m] = {'mean': mean(m_list), 'stdev': stdev(m_list)}
+    for m in per_group_measures:
+        exp_results[m] = dict()
+        for g in groups:
+            m_g_list = [r[m][g] for r in results_dicts]
+            exp_results[m][g] = {'mean': mean(m_g_list), 'stdev': stdev(m_g_list)}
 
     with open(Path('.').absolute() / 'results' / f"{path}.yaml", 'w') as outfile:
         yaml.dump(exp_results, outfile, default_flow_style=False)
