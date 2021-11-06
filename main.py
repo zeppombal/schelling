@@ -15,6 +15,15 @@ path = 'basemin03'
 path = 'basemin04'
 #run_experiment(path, runs=50)
 
+path = 'adaptivity02'
+run_experiment(path, runs=50)
+
+path = 'adaptivity03'
+run_experiment(path, runs=50)
+
+path = 'adaptivity04'
+run_experiment(path, runs=50)
+
 path = 'base_resource_smart'
 #run_experiment(path, runs=500)
 

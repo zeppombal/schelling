@@ -1,0 +1,27 @@
+groups:
+  blue: 0.6
+  red: 0.3
+
+empty: 0.1
+
+is_costs: False
+
+is_smart: False
+
+max_iters: 50
+
+shape:
+  - 50
+  - 50
+
+similar_list:
+  - 0.4
+  - 0.4
+
+resources_list:
+  - 200
+  - 200
+
+adaptivities_list:
+  - 0.001
+  - 0.001
