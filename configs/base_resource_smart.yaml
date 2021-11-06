@@ -8,7 +8,7 @@ is_costs: True
 
 is_smart: True
 
-max_iters: 100
+max_iters: 50
 
 shape:
   - 50

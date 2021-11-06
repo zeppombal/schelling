@@ -233,11 +233,11 @@ class Simulation:
                 self.repopulate()
                 iteration += 1
             else:
-                results = self.end()
+                results = self.end(iteration)
                 return results
 
 
-    def evaluate(self) -> Tuple[Any]:
+    def evaluate(self, last_iter) -> Tuple[Any]:
         """
         Collects and outputs relevant statistics of the final grid
         """
@@ -271,6 +271,7 @@ class Simulation:
         
         results = dict()
 
+        results['last_iter'] = last_iter
         results['interface_density'] = dif_edges / total_edges
         print(f"Interface density: {results['interface_density']}")
 
@@ -288,11 +289,11 @@ class Simulation:
 
 
 
-    def end(self):
+    def end(self, last_iter):
         """
         Ends simulation, and writes gif.
         """
-        results = self.evaluate()
+        results = self.evaluate(last_iter)
         self.moving = False
         if self.animate:
             write_gif(name=self.path)

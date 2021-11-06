@@ -6,11 +6,16 @@ from statistics import mean, stdev
 def summarize_results(path, groups, results_dicts):
     
     exp_results = dict()
-    interface_density_list = [r['interface_density'] for r in results_dicts]]
+
+    last_iter_list = [r['last_iter'] for r in results_dicts]
+    exp_results['avg_last_iter'] = mean(last_iter_list)
+    exp_results['stdev_last_iter'] = stdev(last_iter_list)
+
+    interface_density_list = [r['interface_density'] for r in results_dicts]
     exp_results['avg_interface_density'] = mean(interface_density_list)
     exp_results['stdev_interface_density'] = stdev(interface_density_list)
 
-    unhappy_list = [r['interface_density'] for r in results_dicts]]
+    unhappy_list = [r['interface_density'] for r in results_dicts]
     exp_results['avg_unhappy'] = mean(unhappy_list)
     exp_results['stdev_unhappy'] = stdev(unhappy_list)
 
@@ -46,5 +51,8 @@ def run_experiment(path, runs):
             sim.animate = False
         results = sim.run_simulation()
         results_dicts.append(results)
-    res = summarize_results(path, results_dicts)
+    res = summarize_results(
+        path=path,
+        groups=list(config['groups'].keys()),
+        results_dicts=results_dicts)
     return res

@@ -13,7 +13,7 @@ is_costs: False
 
 is_smart: False
 
-max_iters: 100
+max_iters: 50
 
 similar_list:
   - 0.4
