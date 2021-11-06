@@ -6,9 +6,17 @@ import yaml
 path = 'base'
 run_experiment(path, runs=50)
 
-
-path = 'base_resource_smart'
+path = 'basemin02'
 #run_experiment(path, runs=500)
 
-path = '3groups_base'
+path = 'basemin03'
+#run_experiment(path, runs=500)
+
+path = 'basemin04'
+#run_experiment(path, runs=500)
+
+#path = 'base_resource_smart'
+#run_experiment(path, runs=500)
+
+#path = '3groups_base'
 #run_experiment(path, runs=500)

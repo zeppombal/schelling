@@ -4,9 +4,9 @@ groups:
 
 empty: 0.1
 
-is_costs: True
+is_costs: False
 
-is_smart: True
+is_smart: False
 
 max_iters: 100
 
@@ -23,5 +23,5 @@ resources_list:
   - 200
 
 adaptivities_list:
-  - 0.0001
-  - 0.0001
+  - 0
+  - 0
