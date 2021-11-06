@@ -149,7 +149,8 @@ class Simulation:
                 resourceless += 1
         
         if len(self.unhappy_p) == resourceless:
-            self.end(iter)
+            results = self.end(iter)
+            return results
 
 
     def display(self, iteration: int):
@@ -230,11 +231,12 @@ class Simulation:
             c3 = iteration <= self.max_iters
             if c1 and c2 and c3:
                 print(f"Iter {iteration}: {len(self.unhappy_locs)}")
-                self.repopulate(iteration)
+                results = self.repopulate(iteration)
                 iteration += 1
             else:
                 results = self.end(iteration)
-                return results
+        
+        return results
 
 
     def evaluate(self, last_iter) -> Tuple[Any]:
