@@ -37,7 +37,7 @@ path = 'adapsmart04'
 run_experiment(path, runs=500)
 
 path = 'adap_resource_smart'
-run_experiment(path, runs=500)
+#run_experiment(path, runs=500)
 
 path = '3groups_base'
 #run_experiment(path, runs=500)
