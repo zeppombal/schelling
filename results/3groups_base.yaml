@@ -1,0 +1,29 @@
+avg_resources:
+  blue:
+    mean: 200
+    stdev: 0.0
+  green:
+    mean: 200
+    stdev: 0.0
+  red:
+    mean: 200
+    stdev: 0.0
+avg_sims:
+  blue:
+    mean: 0.0
+    stdev: 0.0
+  green:
+    mean: 0.3
+    stdev: 0.0
+  red:
+    mean: 0.3
+    stdev: 0.0
+interface_density:
+  mean: 0.4865653619148912
+  stdev: 0.0073816094177594
+last_iter:
+  mean: 23.78
+  stdev: 5.743816550990166
+unhappy:
+  mean: 0.02
+  stdev: 0.1414213562373095
