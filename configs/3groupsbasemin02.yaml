@@ -1,7 +1,7 @@
 groups:
-  blue: 0.3
-  red: 0.3
-  green: 0.3
+  blue: 0.5
+  red: 0.2
+  green: 0.2
 
 empty: 0.1
 
@@ -16,9 +16,9 @@ is_smart: False
 max_iters: 50
 
 similar_list:
-  - 0.
-  - 0.3
-  - 0.3
+  - 0.2
+  - 0.2
+  - 0.2
 
 resources_list:
   - 200

@@ -37,13 +37,16 @@ path = 'adapsmart04'
 #run_experiment(path, runs=50)
 
 path = 'adap_resource_smart02'
-#run_experiment(path, runs=50)
+run_experiment(path, runs=50)
 
 path = 'adap_resource_smart03'
-#run_experiment(path, runs=50)
+run_experiment(path, runs=50)
 
 path = 'adap_resource_smart04'
 run_experiment(path, runs=50)
 
 path = '3groups_base'
-#run_experiment(path, runs=50)
+run_experiment(path, runs=50)
+
+path = '3groupsbasemin02'
+run_experiment(path, runs=50)
