@@ -66,6 +66,6 @@ def calc_cost(to_loc, from_loc) -> float:
     l1 = abs(to_loc[0] - from_loc[0])
     l2 = abs(to_loc[1] - from_loc[1])
     # Cost of moving. Not parameterizable
-    cost = 1 + 3 * np.log(max(l1, l2))
+    cost = 1 + 3 * np.log(max(l1, l2)).item()
 
     return cost
