@@ -37,7 +37,7 @@ path = 'adapsmart04'
 #run_experiment(path, runs=50)
 
 path = 'adap_resource_smart02'
-run_experiment(path, runs=3)
+run_experiment(path, runs=50)
 
 path = 'adap_resource_smart03'
 run_experiment(path, runs=50)
