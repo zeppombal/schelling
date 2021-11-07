@@ -1,42 +1,23 @@
 avg_resources:
   blue:
-    mean: !!python/object/apply:numpy.core.multiarray.scalar
-    - &id001 !!python/object/apply:numpy.dtype
-      args:
-      - f8
-      - false
-      - true
-      state: !!python/tuple
-      - 3
-      - <
-      - null
-      - null
-      - null
-      - -1
-      - -1
-      - 0
-    - !!binary |
-      b2M+qJjBaEA=
-    stdev: 0.19309810858070828
+    mean: 198.0834131465047
+    stdev: 0.19377177842740967
   red:
-    mean: !!python/object/apply:numpy.core.multiarray.scalar
-    - *id001
-    - !!binary |
-      gfXKmi6AWUA=
-    stdev: 8.21725325405506
+    mean: 100.84472615179483
+    stdev: 11.34295064368758
 avg_sims:
   blue:
-    mean: 0.4457965733333334
-    stdev: 0.003137021054708924
+    mean: 0.4462054533333334
+    stdev: 0.003184225210217985
   red:
-    mean: 0.41026493333333336
-    stdev: 0.004460949666543845
+    mean: 0.4125566133333334
+    stdev: 0.0041009407578186715
 interface_density:
-  mean: 0.22723784040786885
-  stdev: 0.02541059001577113
+  mean: 0.23414319646457488
+  stdev: 0.02659910119569294
 last_iter:
-  mean: 49.72
-  stdev: 3.175415769017098
+  mean: 50.12
+  stdev: 2.454816174172639
 unhappy:
-  mean: 205.9
-  stdev: 36.586631884515704
+  mean: 207.32
+  stdev: 43.36435101296352
