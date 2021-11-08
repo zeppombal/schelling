@@ -19,11 +19,11 @@ avg_sims:
     mean: 0.2
     stdev: 0.0
 interface_density:
-  mean: 0.49940094988155154
-  stdev: 0.006343182256623653
+  mean: 0.5001398462512728
+  stdev: 0.005334314227737427
 last_iter:
-  mean: 27.88
-  stdev: 7.901536921022752
+  mean: 28.36
+  stdev: 7.0905513443840835
 unhappy:
-  mean: 0.14
-  stdev: 0.857380919321352
+  mean: 0
+  stdev: 0.0
