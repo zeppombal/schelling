@@ -1,8 +1,10 @@
-# crc-proj
-Generalized Schelling Model of Segregation
+# Generalized Schelling Model of Segregation
+Repository with an implementation of the Generalized Schelling Model of Segregation, and results for some experiments.
 
 ### Repository structure
   - [main.py](main.py): file to use when running simulations.
+  - [experiment_functions.py](experiment_functions.py): file with evaluation funcitons for an experiment.
+  - [results](/results): folder with results of experiments run for the base report.
   - [schelling](/schelling): folder with source code for the simulation.
   - [configs](/configs): folder with configurations of the experiments used for the report.
   - [images](/images): folder with images of each iteration of experiments.
@@ -19,4 +21,5 @@ Generalized Schelling Model of Segregation
     - similar_list: list - tolerance threshold for each group. Must have the same length as the groups dictionary; first entry corresponds to first group, etc...
     - resources_list: list - same as similar_list but for resources.
     - adaptivities_list: list - same as the previous two, but for adaptivity. The higher this value, the faster agents adapt their tolerance with their surroundings.
-  - Run main.py with the variable "path" equal to the name of the config you wish to run. For example, "path = base" will have main run the config base.yaml. Alternatively, uncomment the lines with the sys args to feed the config file from the terminal.
+  - Run main.py with the variable "path" equal to the name of the config you wish to run. For example, "path = base" will have main run the config base.yaml.
+  - This will print out the progress of the simulation, and at the end some evaluation results. The latter will be stored in a yaml file in [results](/results).
