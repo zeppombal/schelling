@@ -1,7 +1,8 @@
 groups:
-  blue: 0.3
-  red: 0.3
-  green: 0.3
+  blue: 0.36
+  red: 0.18
+  green: 0.18
+  yellow: 0.18
 
 empty: 0.1
 
@@ -19,13 +20,16 @@ similar_list:
   - 0.3
   - 0.3
   - 0.3
+  - 0.3
 
 resources_list:
   - 200
   - 200
   - 200
+  - 200
 
 adaptivities_list:
+  - 0
   - 0
   - 0
   - 0

@@ -4,13 +4,13 @@ from experiement_functions import *
 import yaml
 
 path = 'base02'
-run_experiment(path, runs=50)
+#run_experiment(path, runs=50)
 
 path = 'base03'
-run_experiment(path, runs=50)
+#run_experiment(path, runs=50)
 
 path = 'base04'
-run_experiment(path, runs=50)
+#run_experiment(path, runs=50)
 
 path = 'basemin02'
 #run_experiment(path, runs=50)
@@ -52,7 +52,13 @@ path = 'adap_resource_smart04'
 #run_experiment(path, runs=50)
 
 path = '3groups_base'
-#run_experiment(path, runs=50)
+run_experiment(path, runs=50)
+
+path = '4groups_base'
+run_experiment(path, runs=50)
+
+path = '4groups_traditional'
+run_experiment(path, runs=50)
 
 path = '3groupsbasemin02'
 #run_experiment(path, runs=50)
