@@ -52,13 +52,13 @@ path = '3groups_base'
 #run_experiment(path, runs=50)
 
 path = '3groupsbasemin02'
-run_experiment(path, runs=50)
+#run_experiment(path, runs=50)
 
 path = '4groups_trad'
-run_experiment(path, runs=50)
+#run_experiment(path, runs=50)
 
 path = '4groups_basemin'
-run_experiment(path, runs=50)
+#run_experiment(path, runs=50)
 
 path = 'basesmart02'
 #run_experiment(path, runs=50)
