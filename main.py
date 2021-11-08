@@ -30,9 +30,6 @@ path = 'adaptivity03'
 path = 'adaptivity04'
 #run_experiment(path, runs=50)
 
-path = 'adap015'
-#run_experiment(path, runs=50)
-
 path = 'adapsmart02'
 #run_experiment(path, runs=50)
 
