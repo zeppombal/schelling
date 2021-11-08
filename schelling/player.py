@@ -44,8 +44,8 @@ class Player:
         """
         new_sim = self.similar
         if dif == 0:
-            new_sim = max(self.similar - self.adaptivity, 0)
+            new_sim = max(self.similar + self.adaptivity, 0)
         elif happy:
-            new_sim = min(self.similar + self.adaptivity, 1)
+            new_sim = min(self.similar - self.adaptivity, 1)
 
         return new_sim
